@@ -1,8 +1,5 @@
 # Technical Preferences
 
-<!-- Populated by /setup-engine. Updated as the user makes decisions throughout development. -->
-<!-- All agents reference this file for project-specific standards and conventions. -->
-
 ## Engine & Language
 
 - **Engine**: Godot 4.6
@@ -41,7 +38,6 @@
 
 ## Forbidden Patterns
 
-<!-- Add patterns that should never appear in this project's codebase -->
 - **No hardcoded gameplay values** — all tunable values in exported `@export` vars or config resources
 - **No `get_node()` with absolute paths** — use `@onready` + relative paths or signals
 - **No `print()` in production paths** — use a debug flag or remove before ship
@@ -49,11 +45,9 @@
 
 ## Allowed Libraries / Addons
 
-<!-- Add approved third-party dependencies here -->
 - **GUT** — Godot Unit Testing framework (testing only, not shipped)
 - [Add more as dependencies are approved via /architecture-decision]
 
 ## Architecture Decisions Log
 
-<!-- Quick reference linking to full ADRs in docs/architecture/ -->
 - [No ADRs yet — use /architecture-decision to create one]
