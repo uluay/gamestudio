@@ -1,0 +1,98 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwiretest001"]
+
+[ext_resource type="Script" path="res://Wire.gd" id="1_wire"]
+[ext_resource type="Script" path="res://Player.gd" id="2_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1400, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(200, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(32, 48)
+
+; ---- Scene Root ----
+[node name="TestRoom" type="Node2D"]
+
+; ---- Ground ----
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Visual" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(-700, -16, 700, -16, 700, 16, -700, 16)
+color = Color(0.35, 0.35, 0.38, 1)
+
+; ---- Platform 1 (left, low) ----
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(-280, -150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1"]
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="Visual" type="Polygon2D" parent="Platform1"]
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+color = Color(0.35, 0.35, 0.38, 1)
+
+; ---- Platform 2 (center, high) ----
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(80, -290)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="Visual" type="Polygon2D" parent="Platform2"]
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+color = Color(0.35, 0.35, 0.38, 1)
+
+; ---- Platform 3 (right, low) ----
+[node name="Platform3" type="StaticBody2D" parent="."]
+position = Vector2(360, -150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="Visual" type="Polygon2D" parent="Platform3"]
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+color = Color(0.35, 0.35, 0.38, 1)
+
+; ---- Wire 1: ground → Platform1 (player's first grab) ----
+; Positioned low so player can grab it with a short jump from the ground.
+[node name="Wire1" type="Node2D" parent="."]
+script = ExtResource("1_wire")
+point_a = Vector2(-380, -90)
+point_b = Vector2(-130, -195)
+
+; ---- Wire 2: Platform1 → Platform2 (ascending diagonal) ----
+[node name="Wire2" type="Node2D" parent="."]
+script = ExtResource("1_wire")
+point_a = Vector2(-220, -210)
+point_b = Vector2(60, -320)
+
+; ---- Wire 3: Platform2 → Platform3 (descending diagonal) ----
+[node name="Wire3" type="Node2D" parent="."]
+script = ExtResource("1_wire")
+point_a = Vector2(120, -310)
+point_b = Vector2(390, -200)
+
+; ---- Player ----
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-460, -80)
+script = ExtResource("2_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_player")
+
+; Green rectangle — placeholder panda body
+[node name="Visual" type="Polygon2D" parent="Player"]
+polygon = PackedVector2Array(-16, -48, 16, -48, 16, 0, -16, 0)
+color = Color(0.2, 0.85, 0.3, 1)
+
+; ---- Camera (follows player) ----
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
